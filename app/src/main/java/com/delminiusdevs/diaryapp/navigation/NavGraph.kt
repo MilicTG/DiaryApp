@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.delminiusdevs.diaryapp.presentation.screens.auth.AuthenticationScreen
 import com.delminiusdevs.diaryapp.presentation.screens.auth.AuthenticationViewModel
+import com.delminiusdevs.diaryapp.presentation.screens.home.HomeScreen
 import com.delminiusdevs.diaryapp.util.Constants.WRITE_SCREEN_ARGUMENT_KEY
 import com.stevdzasan.messagebar.rememberMessageBarState
 import com.stevdzasan.onetap.rememberOneTapSignInState
@@ -27,7 +28,11 @@ fun SetupNavGraph(startDestination: String, navController: NavHostController) {
                 navController.navigate(Screen.Home.route)
             }
         )
-        homeRoute()
+        homeRoute(
+            navigateToWrite = {
+                navController.navigate(Screen.Write.route)
+            }
+        )
         writeRoute()
     }
 }
@@ -75,9 +80,16 @@ fun NavGraphBuilder.authenticationRoute(
     }
 }
 
-fun NavGraphBuilder.homeRoute() {
+fun NavGraphBuilder.homeRoute(
+    navigateToWrite: () -> Unit
+) {
     composable(route = Screen.Home.route) {
+        HomeScreen(
+            onMenuClicked = {
 
+            },
+            navigateToWrite = navigateToWrite
+        )
     }
 }
 
